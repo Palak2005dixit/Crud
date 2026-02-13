@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="glass-card mb-5">
+
+    <h3 class="mb-4 text-center">
+         Your Tasks
+    </h3>
+
+    
+
+    <form method="POST"
+          action="{% if edit_task %}{% url 'edit' edit_task.id %}{% else %}{% url 'create' %}{% endif %}">
+
+        {% csrf_token %}
+
+        <div class="row g-3">
+
+            <div class="col-md-5">
+                <input type="text"
+                       name="title"
+                       class="form-control"
+                       placeholder="Task Title"
+                       value="{% if edit_task %}{{ edit_task.title }}{% endif %}"
+                       required>
+            </div>
+
+            <div class="col-md-5">
+                <input type="text"
+                       name="description"
+                       class="form-control"
+                       placeholder="Description"
+                       value="{% if edit_task %}{{ edit_task.description }}{% endif %}"
+                       required>
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary">
+                    {% if edit_task %}Update{% else %}+ Add{% endif %}
+                </button>
+            </div>
+
+        </div>
+
+        {% if edit_task %}
+        <div class="text-end mt-2">
+            <a href="{% url 'dashboard' %}" class="text-light">Cancel Edit</a>
+        </div>
+        {% endif %}
+
+    </form>
+
+</div>
+
+
+
+
+<div class="row">
+
+    {% for task in tasks %}
+
+    <div class="col-md-4 mb-4">
+        <div class="card-task">
+
+            <h5 class="fw-semibold">
+                {{ task.title }}
+            </h5>
+
+            <p class="text-muted">
+                {{ task.description }}
+            </p>
+
+            <div class="d-flex justify-content-between mt-3">
+
+                <a href="{% url 'edit' task.id %}"
+                   class="btn btn-warning btn-sm px-3">
+                   Edit
+                </a>
+
+                <a href="{% url 'delete' task.id %}"
+                   class="btn btn-danger btn-sm px-3">
+                   Delete
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    {% empty %}
+
+    <div class="text-center text-white mt-5">
+        <h5>No tasks yet </h5>
+        <p>Add your first task above.</p>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

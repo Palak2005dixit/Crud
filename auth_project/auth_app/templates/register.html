@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    color: white;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.glass-card h3 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 12px;
+}
+
+.form-control::placeholder {
+    color: rgba(255,255,255,0.8);
+}
+
+.form-control:focus {
+    background: rgba(255,255,255,0.25);
+    color: white;
+    box-shadow: none;
+}
+
+.btn-primary {
+    padding: 10px;
+}
+</style>
+
+<div class="center-wrapper">
+
+    <div class="glass-card">
+        <h3>Create Account</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-3">
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="Username"
+                       required>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Email"
+                       required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <input type="password"
+                       name="password1"
+                       class="form-control"
+                       placeholder="Password"
+                       required>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-4">
+                <input type="password"
+                       name="password2"
+                       class="form-control"
+                       placeholder="Confirm Password"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Register
+            </button>
+
+            <p class="text-center mt-4">
+                Already have an account?
+                <a href="{% url 'login' %}" class="text-white fw-semibold">
+                    Login here
+                </a>
+            </p>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
